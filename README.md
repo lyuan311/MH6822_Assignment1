@@ -1,8 +1,8 @@
 # MH6822 Regulatory Technology — Assignment 1
 
-LIU YUAN
-G2506419B
-LIUY0301@e.ntu.edu.sg
+Name:            LIU YUAN
+Matriculation:   G2506419B
+Email:           LIUY0301@e.ntu.edu.sg
 
 ---
 
