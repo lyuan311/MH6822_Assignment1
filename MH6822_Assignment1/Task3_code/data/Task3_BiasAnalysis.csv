@@ -1,0 +1,7 @@
+group,attribute,approval_rate_train,approval_rate_live,change
+M,gender,0.9864,0.9004,-0.086
+F,gender,0.9829,0.8995,-0.0834
+Chinese,ethnicity,0.984,0.8998,-0.0841
+Malay,ethnicity,0.9902,0.9003,-0.0899
+Indian,ethnicity,0.984,0.9105,-0.0735
+Other,ethnicity,0.9854,0.881,-0.1045

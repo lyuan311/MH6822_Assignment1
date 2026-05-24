@@ -1,0 +1,98 @@
+# VeridianMRM — Jurisdiction Configuration
+# Source: MAS 2024 Guidelines on AI Model Risk Management (AI MRM)
+# Effective: 2024-07-01
+# Builds on: MAS FEAT Principles (2018), MAS Notice 626 (AML)
+
+jurisdiction: MAS
+version: "2024-AIRMM"
+effective_date: "2024-07-01"
+supersedes: "MAS-FEAT-2018"
+
+scope:
+  includes_genai: true               # ALL AI in scope — technology-neutral
+  includes_traditional_ml: true
+  includes_statistical_models: true
+  includes_foundation_models: true   # LLMs, multimodal models explicitly covered
+  note: "MAS guidelines apply regardless of underlying technology. GenAI and
+         foundation models classified as Tier 1 when customer-facing or
+         used in credit, AML, investment, or insurance decisions."
+
+model_tiers:
+  tier_1:
+    definition: >
+      High-risk: customer-facing AI in credit decisioning, AML/CFT screening,
+      investment advice, insurance underwriting, or any system that materially
+      affects a customer's financial outcome.
+    validation_frequency_months: 6
+    requires_independent_validation: true
+    explainability_required: true    # Consumer right — must be intelligible to customer
+    explainability_method:
+      - SHAP
+      - LIME
+      - counterfactual   # De facto standard under MAS interpretation
+    explainability_standard: "customer_intelligible"
+    bias_testing_required: true
+    bias_framework: "FEAT_Principles"
+    ai_ethics_board: true            # Required for Tier 1
+    adversarial_testing_required: true  # Includes prompt injection for GenAI
+    documentation:
+      - model_inventory_entry
+      - model_risk_appetite_statement
+      - validation_report
+      - ongoing_monitoring_log
+      - post_deployment_monitoring_report
+      - ai_ethics_board_minutes
+      - smar_attestation
+      - explainability_sample_outputs
+      - bias_testing_report
+
+  tier_2:
+    definition: >
+      Standard: all other AI/ML systems not classified as Tier 1.
+    validation_frequency_months: 12
+    requires_independent_validation: true
+    explainability_required: false
+    bias_testing_required: true      # MAS requires bias testing at ALL tiers
+    bias_framework: "FEAT_Principles"
+    ai_ethics_board: false
+    adversarial_testing_required: false
+    documentation:
+      - model_inventory_entry
+      - validation_report
+      - ongoing_monitoring_log
+      - bias_testing_report
+
+drift_thresholds:
+  psi_warning:  0.10               # Tighter than OCC — MAS expects earlier detection
+  psi_critical: 0.20
+  auc_degradation_pct_warning:  3.0
+  auc_degradation_pct_critical: 5.0
+  note: "MAS 2024 AI MRM guidelines do not publish explicit PSI thresholds
+         but MAS SREP examination practice has established 0.10/0.20 as
+         de facto standards. AUC thresholds reflect MAS's 5% trigger."
+
+documentation_requirements:
+  model_inventory: true
+  validation_report: true
+  ongoing_monitoring_log: true
+  model_risk_appetite_statement: true   # Required by MAS; not required by OCC
+  ai_ethics_board_minutes: true
+  post_deployment_monitoring_report: true
+  smar_attestation: true
+  explainability_sample_outputs: true   # Required for Tier 1
+  bias_testing_report: true
+
+senior_accountability:
+  named_officer_required: true
+  personal_liability: true
+  regime: "SMAR"                        # Senior Manager Accountability Regime
+  default_role: "Chief Risk Officer"
+  consequence: "Prohibition order; civil penalty; formal reprimand (individual)"
+
+regulatory_stability:
+  rating: "HIGH"                        # FEAT 2018 → AI MRM 2024: consistent direction
+  last_major_change: "2024-07-01"
+  review_frequency_months: 12
+  note: "MAS has signalled a 2026 review of AI MRM guidelines to address
+         developments in agentic AI. Direction of travel is toward
+         broader coverage, not rollback."

@@ -1,0 +1,81 @@
+# VeridianMRM — Jurisdiction Configuration
+# Source: OCC Bulletin 2026-13 (Model Risk Management)
+# Effective: 2026-03-01
+# Note: Excludes GenAI — separate guidance anticipated
+
+jurisdiction: OCC
+version: "2026-13"
+effective_date: "2026-03-01"
+supersedes: "OCC-2011-12"
+
+scope:
+  includes_genai: false               # EXPLICITLY excluded by OCC 2026-13
+  includes_traditional_ml: true
+  includes_statistical_models: true
+  includes_foundation_models: false   # Treated same as GenAI — excluded
+  note: "GenAI and foundation models are out of scope. Institutions should
+         maintain existing governance under SR 11-7 principles in the interim."
+
+model_tiers:
+  tier_1:
+    definition: >
+      High-risk models: consumer credit decisions, regulatory capital
+      calculation, AML/BSA screening, liquidity stress testing.
+    validation_frequency_months: 6
+    requires_independent_validation: true
+    explainability_required: false    # OCC requires adverse action reasons; method unspecified
+    explainability_method: []
+    bias_testing_required: true
+    bias_framework: "ECOA_RegulationB"
+    ai_ethics_board: false
+    documentation:
+      - model_inventory_entry
+      - validation_report
+      - ongoing_monitoring_log
+      - conceptual_soundness_review
+      - outcome_analysis
+
+  tier_2:
+    definition: >
+      Standard models: all other models with material business use
+      not classified as Tier 1.
+    validation_frequency_months: 12
+    requires_independent_validation: true
+    explainability_required: false
+    bias_testing_required: false
+    bias_framework: null
+    ai_ethics_board: false
+    documentation:
+      - model_inventory_entry
+      - validation_report
+      - ongoing_monitoring_log
+
+drift_thresholds:
+  psi_warning:  0.15
+  psi_critical: 0.25
+  auc_degradation_pct_warning:  5.0
+  auc_degradation_pct_critical: 10.0
+  note: "OCC does not publish explicit PSI thresholds; 0.10/0.25 are
+         industry convention adopted by OCC examiners. VeridianMRM
+         uses these as de facto standards."
+
+documentation_requirements:
+  model_inventory: true
+  validation_report: true
+  ongoing_monitoring_log: true
+  model_risk_appetite_statement: false  # Not required under OCC framework
+  ai_ethics_board_minutes: false
+  post_deployment_monitoring_report: false
+  smar_attestation: false
+
+senior_accountability:
+  named_officer_required: false
+  personal_liability: false
+  regime: null
+
+regulatory_stability:
+  rating: "LOW"                        # High political volatility; policy reversals 2025
+  last_major_change: "2026-03-01"
+  review_frequency_months: 6           # VeridianMRM reviews OCC config every 6 months
+  note: "Biden-era CFPB AI guidance rescinded Jan 2025. OCC 2026-13
+         shaped by industry comment. GenAI exclusion added post-draft."
